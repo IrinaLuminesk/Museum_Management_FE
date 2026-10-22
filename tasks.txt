@@ -1,0 +1,5 @@
+Danh sách những việc cần làm:
+
+1. Tạo loading cho axios để khi gọi api sẽ có một loading xuất hiện.
+2. Tạo các share component như create button, edit button, delete button (Không biết nên không ?)
+3. Tạo trang search và Edit cho Museum

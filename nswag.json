@@ -1,0 +1,19 @@
+{
+    "runtime": "Net90",
+    "documentGenerator": {
+        "fromDocument": {
+            "url": "https://localhost:7141/swagger/v1/swagger.json"
+        }
+    },
+    "codeGenerators": {
+        "openApiToTypeScriptClient": {
+            "className": "{controller}Client",
+            "template": "Axios",
+            "operationGenerationMode": "MultipleClientsFromFirstTagAndOperationId",
+            "generateClientClasses": true,
+            "generateClientInterfaces": false,
+            "generateDtoTypes": true,
+            "output": "src/api/api-client.ts"
+        }
+    }
+}
