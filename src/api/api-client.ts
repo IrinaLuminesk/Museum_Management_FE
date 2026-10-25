@@ -349,6 +349,10 @@ export interface IAPIResponse_Model {
 }
 
 export class Museum_model implements IMuseum_model {
+    pageNumber?: number;
+    pageSize?: number;
+    sortColumn?: string | undefined;
+    sortDirection?: string | undefined;
     mUSEUM_ID?: string | undefined;
     mUSEUM_NAME?: string | undefined;
     aDDRESS?: string | undefined;
@@ -370,6 +374,10 @@ export class Museum_model implements IMuseum_model {
 
     init(_data?: any) {
         if (_data) {
+            this.pageNumber = _data["PageNumber"];
+            this.pageSize = _data["PageSize"];
+            this.sortColumn = _data["SortColumn"];
+            this.sortDirection = _data["SortDirection"];
             this.mUSEUM_ID = _data["MUSEUM_ID"];
             this.mUSEUM_NAME = _data["MUSEUM_NAME"];
             this.aDDRESS = _data["ADDRESS"];
@@ -391,6 +399,10 @@ export class Museum_model implements IMuseum_model {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["PageNumber"] = this.pageNumber;
+        data["PageSize"] = this.pageSize;
+        data["SortColumn"] = this.sortColumn;
+        data["SortDirection"] = this.sortDirection;
         data["MUSEUM_ID"] = this.mUSEUM_ID;
         data["MUSEUM_NAME"] = this.mUSEUM_NAME;
         data["ADDRESS"] = this.aDDRESS;
@@ -405,6 +417,10 @@ export class Museum_model implements IMuseum_model {
 }
 
 export interface IMuseum_model {
+    pageNumber?: number;
+    pageSize?: number;
+    sortColumn?: string | undefined;
+    sortDirection?: string | undefined;
     mUSEUM_ID?: string | undefined;
     mUSEUM_NAME?: string | undefined;
     aDDRESS?: string | undefined;

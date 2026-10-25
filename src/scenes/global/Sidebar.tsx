@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Sidebar as ProSidebar,
     Menu,
@@ -10,16 +11,13 @@ import {
     Box,
     IconButton,
     Divider,
+    Typography,
+    Tooltip
 } from "@mui/material";
 
-import {
-    DashboardOutlined,
-    SettingsOutlined,
-    FolderOutlined,
-    SecurityOutlined,
-    ChevronLeft,
-    ChevronRight,
-} from "@mui/icons-material";
+import { DashboardOutlined, ChevronRight, ChevronLeft } from "@mui/icons-material";
+import MuseumOutlinedIcon from '@mui/icons-material/MuseumOutlined';
+import StorageOutlinedIcon from '@mui/icons-material/StorageOutlined';
 
 interface MenuEntry {
     label: string;
@@ -28,76 +26,30 @@ interface MenuEntry {
     children?: MenuEntry[];
 }
 
-interface SidebarProps {
-    onNavigate?: (path: string) => void;
-}
 
 const menuItems: MenuEntry[] = [
     {
         label: "Dashboard",
         icon: <DashboardOutlined />,
-        path: "/dashboard",
+        path: "/",
     },
     {
-        label: "Users",
-        icon: <DashboardOutlined />,
+        label: "Master Data",
+        icon: <StorageOutlinedIcon />,
         children: [
             {
-                label: "All Users",
-                icon: <DashboardOutlined />,
-                path: "/users",
+                label: "Museum",
+                icon: <MuseumOutlinedIcon />,
+                path: "/Masterdata/Museum"
             },
-            {
-                label: "Roles",
-                icon: <SecurityOutlined />,
-                path: "/users/roles",
-            },
-        ],
-    },
-    {
-        label: "Projects",
-        icon: <FolderOutlined />,
-        children: [
-            {
-                label: "All Projects",
-                icon: <FolderOutlined />,
-                path: "/projects",
-            },
-            {
-                label: "Archived",
-                icon: <FolderOutlined />,
-                path: "/projects/archived",
-            },
-        ],
-    },
-    {
-        label: "Settings",
-        icon: <SettingsOutlined />,
-        children: [
-            {
-                label: "General",
-                icon: <SettingsOutlined />,
-                path: "/settings",
-            },
-            {
-                label: "Security",
-                icon: <SecurityOutlined />,
-                path: "/settings/security",
-            },
-        ],
-    },
+        ]
+    }
 ];
 
-export default function Sidebar({ onNavigate }: SidebarProps) {
+export default function Sidebar() {
+    const navigate = useNavigate();
     const [collapsed, setCollapsed] = useState(false);
-    const [activePath, setActivePath] = useState("/dashboard");
-
-    const handleNavigate = (path?: string) => {
-        if (!path) return;
-
-        setActivePath(path);
-        onNavigate?.(path);
-    };
+    const [activePath, setActivePath] = useState("/");
 
     const renderItems = (items: MenuEntry[]): ReactNode =>
         items.map((item) =>
@@ -114,7 +66,7 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
                     key={item.label}
                     icon={item.icon}
                     active={activePath === item.path}
-                    onClick={() => handleNavigate(item.path)}
+                    onClick={() => navigate(item.path)}
                 >
                     {item.label}
                 </MenuItem>
@@ -143,6 +95,20 @@ export default function Sidebar({ onNavigate }: SidebarProps) {
                     px: 1,
                 }}
             >
+                {!collapsed && (
+                    <Tooltip title="Museum Management System" placement="bottom-start">
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                pl: 1, fontWeight: 700, flex: 1,
+                                textOverflow: "ellipsis",
+                                cursor: "default",
+                            }}
+                        >
+                            Museum Management System
+                        </Typography>
+                    </Tooltip>
+                )}
                 <IconButton
                     size="large"
                     aria-label={
