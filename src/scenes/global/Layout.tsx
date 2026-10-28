@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
+import Footer from "./Footer";
 
 export default function Layout() {
     return (
@@ -11,6 +12,7 @@ export default function Layout() {
                 <Topbar />
                 {/* Where the page will get render */}
                 <Outlet />
+                <Footer />
             </main>
         </div>
     );

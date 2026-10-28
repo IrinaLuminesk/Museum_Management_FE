@@ -10,6 +10,244 @@
 import axios, { AxiosError } from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
+export class AllcodeClient {
+    protected instance: AxiosInstance;
+    protected baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+
+        this.instance = instance || axios.create();
+
+        this.baseUrl = baseUrl ?? "";
+
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    aLLCODE_SEARCH(body: Allcode_model | undefined, cancelToken?: CancelToken): Promise<APIResponse_Model> {
+        let url_ = this.baseUrl + "/api/ConfigurationManagement/Allcode/ALLCODE_SEARCH";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processALLCODE_SEARCH(_response);
+        });
+    }
+
+    protected processALLCODE_SEARCH(response: AxiosResponse): Promise<APIResponse_Model> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = APIResponse_Model.fromJS(resultData200);
+            return Promise.resolve<APIResponse_Model>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<APIResponse_Model>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    aLLCODE_CREATE(body: Allcode_model | undefined, cancelToken?: CancelToken): Promise<APIResponse_Model> {
+        let url_ = this.baseUrl + "/api/ConfigurationManagement/Allcode/ALLCODE_CREATE";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processALLCODE_CREATE(_response);
+        });
+    }
+
+    protected processALLCODE_CREATE(response: AxiosResponse): Promise<APIResponse_Model> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = APIResponse_Model.fromJS(resultData200);
+            return Promise.resolve<APIResponse_Model>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<APIResponse_Model>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    aLLCODE_EDIT(body: Allcode_model | undefined, cancelToken?: CancelToken): Promise<APIResponse_Model> {
+        let url_ = this.baseUrl + "/api/ConfigurationManagement/Allcode/ALLCODE_EDIT";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processALLCODE_EDIT(_response);
+        });
+    }
+
+    protected processALLCODE_EDIT(response: AxiosResponse): Promise<APIResponse_Model> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = APIResponse_Model.fromJS(resultData200);
+            return Promise.resolve<APIResponse_Model>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<APIResponse_Model>(null as any);
+    }
+
+    /**
+     * @param allcode_Id (optional) 
+     * @return OK
+     */
+    aLLCODE_GETBYID(allcode_Id: number | undefined, cancelToken?: CancelToken): Promise<APIResponse_Model> {
+        let url_ = this.baseUrl + "/api/ConfigurationManagement/Allcode/ALLCODE_GETBYID?";
+        if (allcode_Id === null)
+            throw new globalThis.Error("The parameter 'allcode_Id' cannot be null.");
+        else if (allcode_Id !== undefined)
+            url_ += "Allcode_Id=" + encodeURIComponent("" + allcode_Id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "POST",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processALLCODE_GETBYID(_response);
+        });
+    }
+
+    protected processALLCODE_GETBYID(response: AxiosResponse): Promise<APIResponse_Model> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = APIResponse_Model.fromJS(resultData200);
+            return Promise.resolve<APIResponse_Model>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<APIResponse_Model>(null as any);
+    }
+}
+
 export class MuseumClient {
     protected instance: AxiosInstance;
     protected baseUrl: string;
@@ -348,6 +586,74 @@ export interface IAPIResponse_Model {
     result?: any | undefined;
 }
 
+export class Allcode_model implements IAllcode_model {
+    pageNumber?: number;
+    pageSize?: number;
+    sortColumn?: string | undefined;
+    sortDirection?: string | undefined;
+    aLLCODE_ID?: number;
+    cDNAME?: string | undefined;
+    cDTYPE?: string | undefined;
+    cD_VAL?: string | undefined;
+    cONTENT?: string | undefined;
+
+    constructor(data?: IAllcode_model) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.pageNumber = _data["PageNumber"];
+            this.pageSize = _data["PageSize"];
+            this.sortColumn = _data["SortColumn"];
+            this.sortDirection = _data["SortDirection"];
+            this.aLLCODE_ID = _data["ALLCODE_ID"];
+            this.cDNAME = _data["CDNAME"];
+            this.cDTYPE = _data["CDTYPE"];
+            this.cD_VAL = _data["CD_VAL"];
+            this.cONTENT = _data["CONTENT"];
+        }
+    }
+
+    static fromJS(data: any): Allcode_model {
+        data = typeof data === 'object' ? data : {};
+        let result = new Allcode_model();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["PageNumber"] = this.pageNumber;
+        data["PageSize"] = this.pageSize;
+        data["SortColumn"] = this.sortColumn;
+        data["SortDirection"] = this.sortDirection;
+        data["ALLCODE_ID"] = this.aLLCODE_ID;
+        data["CDNAME"] = this.cDNAME;
+        data["CDTYPE"] = this.cDTYPE;
+        data["CD_VAL"] = this.cD_VAL;
+        data["CONTENT"] = this.cONTENT;
+        return data;
+    }
+}
+
+export interface IAllcode_model {
+    pageNumber?: number;
+    pageSize?: number;
+    sortColumn?: string | undefined;
+    sortDirection?: string | undefined;
+    aLLCODE_ID?: number;
+    cDNAME?: string | undefined;
+    cDTYPE?: string | undefined;
+    cD_VAL?: string | undefined;
+    cONTENT?: string | undefined;
+}
+
 export class Museum_model implements IMuseum_model {
     pageNumber?: number;
     pageSize?: number;
@@ -362,6 +668,10 @@ export class Museum_model implements IMuseum_model {
     cOUNTRY?: string | undefined;
     pHONE?: string | undefined;
     uRL?: string | undefined;
+    sTATUS?: string | undefined;
+    cREATE_DT?: Date | undefined;
+    cREATE_DT_FROMDATE?: Date | undefined;
+    cREATE_DT_TODATE?: Date | undefined;
 
     constructor(data?: IMuseum_model) {
         if (data) {
@@ -387,6 +697,10 @@ export class Museum_model implements IMuseum_model {
             this.cOUNTRY = _data["COUNTRY"];
             this.pHONE = _data["PHONE"];
             this.uRL = _data["URL"];
+            this.sTATUS = _data["STATUS"];
+            this.cREATE_DT = _data["CREATE_DT"] ? new Date(_data["CREATE_DT"].toString()) : undefined as any;
+            this.cREATE_DT_FROMDATE = _data["CREATE_DT_FROMDATE"] ? new Date(_data["CREATE_DT_FROMDATE"].toString()) : undefined as any;
+            this.cREATE_DT_TODATE = _data["CREATE_DT_TODATE"] ? new Date(_data["CREATE_DT_TODATE"].toString()) : undefined as any;
         }
     }
 
@@ -412,6 +726,10 @@ export class Museum_model implements IMuseum_model {
         data["COUNTRY"] = this.cOUNTRY;
         data["PHONE"] = this.pHONE;
         data["URL"] = this.uRL;
+        data["STATUS"] = this.sTATUS;
+        data["CREATE_DT"] = this.cREATE_DT ? this.cREATE_DT.toISOString() : undefined as any;
+        data["CREATE_DT_FROMDATE"] = this.cREATE_DT_FROMDATE ? this.cREATE_DT_FROMDATE.toISOString() : undefined as any;
+        data["CREATE_DT_TODATE"] = this.cREATE_DT_TODATE ? this.cREATE_DT_TODATE.toISOString() : undefined as any;
         return data;
     }
 }
@@ -430,6 +748,10 @@ export interface IMuseum_model {
     cOUNTRY?: string | undefined;
     pHONE?: string | undefined;
     uRL?: string | undefined;
+    sTATUS?: string | undefined;
+    cREATE_DT?: Date | undefined;
+    cREATE_DT_FROMDATE?: Date | undefined;
+    cREATE_DT_TODATE?: Date | undefined;
 }
 
 export class ApiException extends Error {

@@ -1,14 +1,4 @@
-import { useState } from 'react';
-// import {
-//     Box,
-//     Button,
-//     Card,
-//     CardContent,
-//     Divider,
-//     Stack,
-//     TextField,
-//     Typography,
-// } from '@mui/material';
+import { useState, useCallback } from 'react';
 import {
     Container,
     Box,
@@ -16,46 +6,83 @@ import {
     CardContent,
     CardHeader,
     Grid,
-    Stack,
-    Divider,
-    TextField, Typography, Button
+    TextField, Button
 } from "@mui/material";
+import type { Column } from '../../../components/DataTables/types';
 import type { IMuseum_model } from '../../../api/api-client';
 import { Museum_model } from '../../../api/api-client';
 import { _MuseumService } from '../../../api/apiClient';
+import { DataTable } from '../../../components/DataTables/DataTable';
+
 function MuseumSearch() {
     const [search, setSearch] = useState<IMuseum_model>({
-        pageNumber: 1,
-        pageSize: 10
+        mUSEUM_ID: '',
+        mUSEUM_NAME: '',
+        aDDRESS: '',
     });
 
+    // 2. Applied search state (only updates when Search button or Clear is clicked)
+    const [appliedSearch, setAppliedSearch] = useState<IMuseum_model>({});
+
+    const columns: Column<IMuseum_model>[] = [
+        { key: 'MUSEUM_ID', header: 'ID', sortable: false },
+        { key: 'MUSEUM_NAME', header: 'Museum Name', sortable: true },
+        { key: 'CITY', header: 'City', sortable: true },
+        { key: 'COUNTRY', header: 'Country', sortable: true },
+    ];
+
+    const handleFetchMuseums = useCallback(async (params: IMuseum_model) => {
+        // Combine pagination/sorting with your explicitly applied search filters
+        console.log("DataTable sent these params:", params);
+        const searchModel = new Museum_model({
+            pageNumber: params.pageNumber,
+            pageSize: params.pageSize,
+            sortColumn: params.sortColumn,
+            sortDirection: params.sortDirection,
+            mUSEUM_ID: appliedSearch.mUSEUM_ID,
+            mUSEUM_NAME: appliedSearch.mUSEUM_NAME,
+            aDDRESS: appliedSearch.aDDRESS,
+        });
+        console.log("NSwag Museum_model object built:", searchModel);
+
+        // Call your NSwag-generated service using Axios
+        const response = await _MuseumService.mUSEUM_SEARCH(searchModel);
+
+        return {
+            data: response.result.data || [],
+            totalRows: response.result.totalRows || 0,
+        };
+    }, [appliedSearch]);
+
     async function handleSearch() {
-        const response = await _MuseumService.mUSEUM_SEARCH(new Museum_model(search));
-        console.log(typeof(response));
+        setAppliedSearch(search); // Commits input values to API triggers
     }
 
-    const handleCreate = () => {
-        // TODO: Navigate to the museum creation page
-        console.log('Create museum');
-    };
-
     const handleClear = () => {
-        setSearch({
+        const emptyState: IMuseum_model = {
+            mUSEUM_ID: '',
+            mUSEUM_NAME: '',
+            aDDRESS: '',
             pageNumber: 1,
             pageSize: 10
-        });
+        };
+        setSearch(emptyState);
+        setAppliedSearch(emptyState); // Resets table data
     };
+
 
     return (
         <>
             <Box sx={{
                 pt: 2,
+                pl: 2,
+                pr:2,
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
             }}>
                 {/* Search Critera */}
-                <Container>
+                {/* <Container> */}
                     <Card elevation={2}>
                         <CardHeader
                             title="Museum Search"
@@ -149,12 +176,17 @@ function MuseumSearch() {
                             </Box>
                         </CardContent>
                     </Card>
-                </Container>
+                {/* </Container> */}
                 <Container>
                     <Card elevation={2}>
                         <CardContent>
                             <Box>
-                                Hello
+                                <DataTable<IMuseum_model, IMuseum_model>
+                                    columns={columns}
+                                    fetchData={handleFetchMuseums}
+                                    externalFilters={appliedSearch}
+                                    initialPageSize={10}
+                                />
                             </Box>
                         </CardContent>
                     </Card>

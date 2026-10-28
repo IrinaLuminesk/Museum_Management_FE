@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 function MuseumEdit() {
     const [searchParams] = useSearchParams();
 
-    const museumId = searchParams.get("MuseumId");
+    const museumId = searchParams.get("MUSEUM_ID");
 
     const isEdit = museumId !== null && museumId !== "";
 

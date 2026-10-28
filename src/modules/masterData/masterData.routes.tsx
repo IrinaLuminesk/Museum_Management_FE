@@ -9,7 +9,7 @@ const masterdataRoutes: RouteObject[] = [
         HydrateFallback: Loading,
         lazy: async () => {
             const { default: MuseumSearch } = await import(
-                "./Museum/MuseumSearch"
+                "./Museum/MuseumSearch2"
             );
 
             return { Component: MuseumSearch };

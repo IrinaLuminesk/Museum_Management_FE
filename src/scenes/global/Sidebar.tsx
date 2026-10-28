@@ -18,6 +18,8 @@ import {
 import { DashboardOutlined, ChevronRight, ChevronLeft } from "@mui/icons-material";
 import MuseumOutlinedIcon from '@mui/icons-material/MuseumOutlined';
 import StorageOutlinedIcon from '@mui/icons-material/StorageOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 
 interface MenuEntry {
     label: string;
@@ -43,6 +45,17 @@ const menuItems: MenuEntry[] = [
                 path: "/Masterdata/Museum"
             },
         ]
+    },
+    {
+        label: "Configuration Management",
+        icon: <SettingsOutlinedIcon />,
+        children: [
+            {
+                label: "Allcode",
+                icon: <CodeOutlinedIcon />,
+                path: "/ConfigurationManagement/Allcode"
+            },
+        ]
     }
 ];
 
@@ -58,6 +71,7 @@ export default function Sidebar() {
                     key={item.label}
                     label={item.label}
                     icon={item.icon}
+
                 >
                     {renderItems(item.children)}
                 </SubMenu>
@@ -80,9 +94,16 @@ export default function Sidebar() {
             collapsedWidth="72px"
             transitionDuration={350}
             backgroundColor="#ffffff"
+            // rootStyles={{
+            //     height: "100%",
+            //     borderRight: "1px solid #e0e0e0",
+            // }}
             rootStyles={{
-                height: "100%",
+                height: "auto",
+                minHeight: "100%",
+                alignSelf: "stretch",
                 borderRight: "1px solid #e0e0e0",
+                flexShrink: 0,
             }}
         >
             {/* Collapse toggle */}
