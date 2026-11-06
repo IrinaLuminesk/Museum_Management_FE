@@ -1,6 +1,7 @@
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
+import { NotificationProvider } from './scenes/global/Snackbar';
 import router from './routes';
 import './App.css'
 
@@ -15,15 +16,10 @@ function App() {
 			<ColorModeContext.Provider value={colorMode}>
 				<ThemeProvider theme={theme}>
 					<CssBaseline />
-					<Loading />
-					{/* <div className="app">
-						<Sidebar />
-						<main className='content'>
-							<Topbar />
-							<RouterProvider router={router} />
-						</main>
-					</div> */}
-					<RouterProvider router={router} />
+					<NotificationProvider>
+						<Loading />
+						<RouterProvider router={router} />
+					</NotificationProvider>
 				</ThemeProvider>
 			</ColorModeContext.Provider>
 		</>

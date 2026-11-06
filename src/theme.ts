@@ -1,125 +1,6 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 
-// color design tokens export
-// export const tokens = (mode) => ({
-//   ...(mode === "dark"
-//     ? {
-//       grey: {
-//         100: "#F8FAFC",
-//         200: "#F1F5F9",
-//         300: "#E2E8F0",
-//         400: "#CBD5E1",
-//         500: "#94A3B8",
-//         600: "#64748B",
-//         700: "#475569",
-//         800: "#334155",
-//         900: "#1E293B",
-//       },
-//       primary: {
-//         100: "#E3F2FD",
-//         200: "#BBDEFB",
-//         300: "#90CAF9",
-//         400: "#42A5F5",
-//         500: "#2196F3",
-//         600: "#1E88E5",
-//         700: "#1976D2",
-//         800: "#1565C0",
-//         900: "#0D47A1",
-//       },
-//       greenAccent: {
-//         100: "#E8F5E9",
-//         200: "#C8E6C9",
-//         300: "#A5D6A7",
-//         400: "#81C784",
-//         500: "#66BB6A",
-//         600: "#4CAF50",
-//         700: "#388E3C",
-//         800: "#2E7D32",
-//         900: "#1B5E20",
-//       },
-//       redAccent: {
-//         100: "#FFEBEE",
-//         200: "#FFCDD2",
-//         300: "#EF9A9A",
-//         400: "#E57373",
-//         500: "#EF5350",
-//         600: "#E53935",
-//         700: "#D32F2F",
-//         800: "#C62828",
-//         900: "#B71C1C",
-//       },
-//       blueAccent: {
-//         100: "#E8EAF6",
-//         200: "#C5CAE9",
-//         300: "#9FA8DA",
-//         400: "#7986CB",
-//         500: "#5C6BC0",
-//         600: "#3949AB",
-//         700: "#303F9F",
-//         800: "#283593",
-//         900: "#1A237E",
-//       },
-//     }
-//     : {
-//       grey: {
-//         100: "#1E293B",
-//         200: "#273449",
-//         300: "#334155",
-//         400: "#475569",
-//         500: "#64748B",
-//         600: "#94A3B8",
-//         700: "#CBD5E1",
-//         800: "#E2E8F0",
-//         900: "#F8FAFC",
-//       },
-//       primary: {
-//         100: "#0D47A1",
-//         200: "#1565C0",
-//         300: "#1976D2",
-//         400: "#1E88E5",
-//         500: "#2196F3",
-//         600: "#42A5F5",
-//         700: "#64B5F6",
-//         800: "#90CAF9",
-//         900: "#BBDEFB",
-//       },
-//       greenAccent: {
-//         100: "#1B5E20",
-//         200: "#2E7D32",
-//         300: "#388E3C",
-//         400: "#4CAF50",
-//         500: "#66BB6A",
-//         600: "#81C784",
-//         700: "#A5D6A7",
-//         800: "#C8E6C9",
-//         900: "#E8F5E9",
-//       },
-//       redAccent: {
-//         100: "#B71C1C",
-//         200: "#C62828",
-//         300: "#D32F2F",
-//         400: "#E53935",
-//         500: "#EF5350",
-//         600: "#E57373",
-//         700: "#EF9A9A",
-//         800: "#FFCDD2",
-//         900: "#FFEBEE",
-//       },
-//       blueAccent: {
-//         100: "#1A237E",
-//         200: "#283593",
-//         300: "#303F9F",
-//         400: "#3949AB",
-//         500: "#5C6BC0",
-//         600: "#7986CB",
-//         700: "#9FA8DA",
-//         800: "#C5CAE9",
-//         900: "#E8EAF6",
-//       },
-//     }),
-// });
-
 export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
@@ -248,92 +129,6 @@ export const tokens = (mode) => ({
     }),
 });
 
-// mui theme settings
-// export const themeSettings = (mode) => {
-//   const colors = tokens(mode);
-//   return {
-//     palette: {
-//       mode: mode,
-//       ...(mode === "dark"
-//         ? {
-//           primary: {
-//             main: colors.primary[400],
-//             light: colors.primary[300],
-//             dark: colors.primary[600],
-//             contrastText: "#FFFFFF",
-//           },
-//           secondary: {
-//             main: colors.greenAccent[500],
-//           },
-//           neutral: {
-//             dark: colors.grey[700],
-//             main: colors.grey[500],
-//             light: colors.grey[100],
-//           },
-//           background: {
-//             default: "#1E293B",
-//             paper: "#273449",
-//           },
-//           text: {
-//             primary: "#F8FAFC",
-//             secondary: "#CBD5E1",
-//           },
-//         }
-//         : {
-//           primary: {
-//             main: colors.primary[500],
-//             light: colors.primary[300],
-//             dark: colors.primary[700],
-//             contrastText: "#FFFFFF",
-//           },
-//           secondary: {
-//             main: colors.greenAccent[600],
-//           },
-//           neutral: {
-//             dark: colors.grey[700],
-//             main: colors.grey[500],
-//             light: colors.grey[100],
-//           },
-//           background: {
-//             default: "#F8FAFC",
-//             paper: "#FFFFFF",
-//           },
-//           text: {
-//             primary: "#1E293B",
-//             secondary: "#64748B",
-//           },
-//         }),
-//     },
-//     typography: {
-//       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-//       fontSize: 12,
-//       h1: {
-//         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-//         fontSize: 40,
-//       },
-//       h2: {
-//         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-//         fontSize: 32,
-//       },
-//       h3: {
-//         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-//         fontSize: 24,
-//       },
-//       h4: {
-//         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-//         fontSize: 20,
-//       },
-//       h5: {
-//         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-//         fontSize: 16,
-//       },
-//       h6: {
-//         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-//         fontSize: 14,
-//       },
-//     },
-//   };
-// };
 
 export const themeSettings = (mode) => {
   const colors = tokens(mode);
@@ -373,8 +168,9 @@ export const themeSettings = (mode) => {
             paper: colors.grey[800],   // Surface / Card (#24201A)
           },
           text: {
-            primary: colors.grey[100],   // Warm Alabaster (#F9F8F6)
-            secondary: colors.grey[400], // Muted Stone
+            primary: "#000000",
+            secondary: "#000000",
+            disabled: "#000000",
           },
           divider: "rgba(220, 215, 206, 0.12)",
         }
@@ -419,57 +215,54 @@ export const themeSettings = (mode) => {
       borderRadius: 6, // Refined, clean corners
     },
     typography: {
-      fontFamily: ["Plus Jakarta Sans", "Inter", "sans-serif"].join(","),
-      // fontSize: 13,
-      h1: {
-        fontFamily: ["Playfair Display", "Cinzel", "serif"].join(","),
-        // fontSize: 36,
-        fontWeight: 600,
-        letterSpacing: "-0.02em",
-      },
-      h2: {
-        fontFamily: ["Playfair Display", "Cinzel", "serif"].join(","),
-        // fontSize: 28,
-        fontWeight: 600,
-        letterSpacing: "-0.01em",
-      },
-      h3: {
-        fontFamily: ["Playfair Display", "Cinzel", "serif"].join(","),
-        // fontSize: 22,
+       fontFamily: '"Open Sans", sans-serif',
+
+      fontWeightRegular: 500,
+      fontWeightMedium: 600,
+      fontWeightBold: 700,
+
+      body1: {
+        fontSize: 15,
+        lineHeight: 1.6,
         fontWeight: 600,
       },
-      h4: {
-        fontFamily: ["Plus Jakarta Sans", "sans-serif"].join(","),
-        // fontSize: 18,
-        fontWeight: 600,
-      },
-      h5: {
-        fontFamily: ["Plus Jakarta Sans", "sans-serif"].join(","),
+
+      body2: {
         fontSize: 15,
         fontWeight: 600,
       },
-      h6: {
-        fontFamily: ["Plus Jakarta Sans", "sans-serif"].join(","),
-        fontSize: 13,
-        fontWeight: 600,
-        textTransform: "uppercase",
-        letterSpacing: "0.05em",
-      },
+
       subtitle1: {
-        fontSize: 14,
-        fontWeight: 500,
-      },
-      body1: {
-        fontSize: 13,
-        lineHeight: 1.6,
-      },
-      button: {
+        fontSize: 15,
         fontWeight: 600,
+      },
+
+      button: {
+        fontWeight: 900,
         letterSpacing: "0.02em",
       },
+
     },
     // Optional Component Style Overrides for Material UI
     components: {
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            color: "#000000",
+          },
+        },
+      },
+
+      MuiCardHeader: {
+        styleOverrides: {
+          title: {
+            color: "inherit",
+          },
+          subheader: {
+            color: "inherit",
+          },
+        },
+      },
       MuiCard: {
         styleOverrides: {
           root: {
@@ -548,16 +341,6 @@ export const themeSettings = (mode) => {
           },
         },
       },
-      // MuiTableCell: {
-      //   styleOverrides: {
-      //     head: {
-      //       fontWeight: 900,
-      //       textTransform: "uppercase",
-      //       fontSize: "0.75rem",
-      //       letterSpacing: "0.05em",
-      //     },
-      //   },
-      // },
     },
   };
 };

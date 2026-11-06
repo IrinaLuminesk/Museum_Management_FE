@@ -87,60 +87,6 @@ export function DataTable<T extends Record<string, any>, TParams extends BaseQue
     };
 
     return (
-        // <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
-        //     {/* Table implementation */}
-        //     <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-        //         <thead>
-        //             <tr style={{ backgroundColor: '#f2f2f2', borderBottom: '2px solid #ccc' }}>
-        //                 {columns.map((col) => (
-        //                     <th
-        //                         key={col.key}
-        //                         onClick={() => handleSort(col.key, col.sortable)}
-        //                         style={{ padding: '12px', cursor: col.sortable ? 'pointer' : 'default', userSelect: 'none' }}
-        //                     >
-        //                         {col.header}
-        //                         {col.sortable && sortColumn === col.key && (
-        //                             <span> {sortDirection === 'asc' ? '▲' : '▼'}</span>
-        //                         )}
-        //                     </th>
-        //                 ))}
-        //             </tr>
-        //         </thead>
-        //         <tbody>
-        //             {loading ? (
-        //                 <tr><td colSpan={columns.length} style={{ padding: '24px', textAlign: 'center' }}>Loading...</td></tr>
-        //             ) : error ? (
-        //                 <tr><td colSpan={columns.length} style={{ padding: '24px', textAlign: 'center', color: 'red' }}>{error}</td></tr>
-        //             ) : data.length === 0 ? (
-        //                 <tr><td colSpan={columns.length} style={{ padding: '24px', textAlign: 'center' }}>No records found.</td></tr>
-        //             ) : (
-        //                 data.map((row, rowIndex) => (
-        //                     <tr key={row.mUSEUM_ID ?? rowIndex} style={{ borderBottom: '1px solid #eee' }}>
-        //                         {columns.map((col) => (
-        //                             <td key={col.key} style={{ padding: '12px' }}>
-        //                                 {col.render ? col.render(row) : row[col.key]}
-        //                             </td>
-        //                         ))}
-        //                     </tr>
-        //                 ))
-        //             )}
-        //         </tbody>
-        //     </table>
-
-        //     {/* Pagination Controls */}
-        //     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px' }}>
-        //         <span>Page <strong>{pageNumber}</strong> of <strong>{totalPages}</strong> ({totalRows} total items)</span>
-        //         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-        //             <select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPageNumber(1); }} style={{ padding: '4px' }}>
-        //                 <option value={5}>5 rows</option>
-        //                 <option value={10}>10 rows</option>
-        //                 <option value={20}>20 rows</option>
-        //             </select>
-        //             <button onClick={() => setPageNumber((prev) => Math.max(prev - 1, 1))} disabled={pageNumber === 1 || loading}>Previous</button>
-        //             <button onClick={() => setPageNumber((prev) => Math.min(prev + 1, totalPages))} disabled={pageNumber >= totalPages || loading}>Next</button>
-        //         </div>
-        //     </div>
-        // </div>
         <>
             <TableContainer sx={{
                 maxHeight: 440, 
@@ -186,8 +132,23 @@ export function DataTable<T extends Record<string, any>, TParams extends BaseQue
                     <TableBody>
                         {error ? (
                             <TableRow>
-                                <TableCell colSpan={columns.length} align="center" sx={{ py: 4 }}>
-                                    <Alert severity="error" sx={{ justifyContent: 'center' }}>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    sx={{
+                                        p: 0,
+                                        display: 'table-cell',
+                                        width: '100%'
+                                    }}
+                                >
+                                    <Alert
+                                        severity="error"
+                                        sx={{
+                                            width: '100%',
+                                            justifyContent: 'center',
+                                            borderRadius: 0,
+                                            py: 2
+                                        }}
+                                    >
                                         {error}
                                     </Alert>
                                 </TableCell>

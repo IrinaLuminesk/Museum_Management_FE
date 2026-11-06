@@ -4,14 +4,14 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { type IMuseum_model, type IAllcode_model, Allcode_model } from '../../../api/api-client';
+import { type IMuseum_model, type IAllcode_model, Allcode_model, Export_model, MuseumExport_model } from '../../../api/api-client';
 import { Museum_model } from '../../../api/api-client';
 import { _AllcodeService, _MuseumService } from '../../../api/apiClient';
 // Dùng để tạo table
 import { DataTable } from '../../../components/DataTables/DataTable';
 import type { Column } from '../../../components/DataTables/types';
 import { useNavigate } from "react-router-dom";
-import { formatDateTime } from '../../../utils/utils';
+import { formatDateTime, DownloadFile } from '../../../utils/utils';
 
 function MuseumSearch() {
     const navigate = useNavigate()
@@ -68,7 +68,8 @@ function MuseumSearch() {
             cOUNTRY: appliedSearch.cOUNTRY,
             cREATE_DT_FROMDATE: appliedSearch.cREATE_DT_FROMDATE,
             cREATE_DT_TODATE: appliedSearch.cREATE_DT_TODATE,
-            sTATUS: appliedSearch.sTATUS
+            sTATUS: appliedSearch.sTATUS,
+            export: false
         });
 
         const response = await _MuseumService.mUSEUM_SEARCH(searchModel);
@@ -95,6 +96,46 @@ function MuseumSearch() {
         };
         setSearchParams(emptyState);
     };
+    // trigger nút export
+    const handleExport = async () => {
+        const excludedHeaders: string[] = []
+        // const headers: string[] = columns
+        // .filter(column => !excludedHeaders.includes(column.key))
+        // .map(column => column.key);
+        const [column_id, headers] = columns
+        .filter(column => !excludedHeaders.includes(column.key))
+        .reduce<[string[], string[]]>(
+            (acc, item) => {
+                acc[0].push(item.key);
+                acc[1].push(item.header);
+                return acc;
+            },
+            [[], []]
+        );
+        const reportName = "MUSEUM_REPORT.xlsx";
+        const searchParam = new Museum_model({
+            mUSEUM_ID: appliedSearch.mUSEUM_ID,
+            mUSEUM_NAME: appliedSearch.mUSEUM_NAME,
+            aDDRESS: appliedSearch.aDDRESS,
+            cITY: appliedSearch.cITY,
+            sTATE: appliedSearch.sTATE,
+            cOUNTRY: appliedSearch.cOUNTRY,
+            cREATE_DT_FROMDATE: appliedSearch.cREATE_DT_FROMDATE,
+            cREATE_DT_TODATE: appliedSearch.cREATE_DT_TODATE,
+            sTATUS: appliedSearch.sTATUS,
+            export: true
+        });
+        const exportParams = new Export_model({
+            headers: headers,
+            columnId: column_id,
+            reportName: reportName
+        });
+        const result = await _MuseumService.mUSEUM_EXPORT(new MuseumExport_model({
+            searchParams: searchParam,
+            exportParams: exportParams
+        }));
+        DownloadFile(result.result.excelData);
+    }
 
     // Các cột trong table
     const columns: Column<IMuseum_model>[] = [
@@ -175,6 +216,13 @@ function MuseumSearch() {
                 <>{formatDateTime(row.CREATE_DT)}</>
             ),
         },
+        {
+            key: 'CONTENT',
+            header: 'Museum Status',
+            sortable: true,
+            width: 150,
+            minWidth: 150,
+        },
     ];
 
     return (
@@ -191,18 +239,6 @@ function MuseumSearch() {
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
                     <Button variant="contained" color="success" onClick={() => {navigate("/Masterdata/Museum/Create")}}>
                         Create
-                    </Button>
-
-                    <Button
-                        variant="contained"
-                        sx={{
-                            bgcolor: '#00838f',
-                            '&:hover': {
-                                bgcolor: '#006064',
-                            },
-                        }}
-                    >
-                        Export
                     </Button>
                 </Box>
                 {/* Search Critera */}
@@ -300,7 +336,7 @@ function MuseumSearch() {
                                         onChange={(event) =>
                                             setSearchParams((prev) => ({
                                                 ...prev,
-                                                mUSEUM_NAME: event.target.value,
+                                                sTATE: event.target.value,
                                             }))
                                         }
                                     />
@@ -425,6 +461,13 @@ function MuseumSearch() {
                                 >
                                     <Button type="submit" variant="contained">
                                         Search
+                                    </Button>
+                                    <Button
+                                        onClick={() => {handleExport()}}
+                                        variant="contained"
+                                        color="success" 
+                                    >
+                                        Export
                                     </Button>
 
                                     <Button

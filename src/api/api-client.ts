@@ -540,6 +540,62 @@ export class MuseumClient {
         }
         return Promise.resolve<APIResponse_Model>(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    mUSEUM_EXPORT(body: MuseumExport_model | undefined, cancelToken?: CancelToken): Promise<APIResponse_Model> {
+        let url_ = this.baseUrl + "/api/MasterData/Museum/MUSEUM_EXPORT";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processMUSEUM_EXPORT(_response);
+        });
+    }
+
+    protected processMUSEUM_EXPORT(response: AxiosResponse): Promise<APIResponse_Model> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = APIResponse_Model.fromJS(resultData200);
+            return Promise.resolve<APIResponse_Model>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<APIResponse_Model>(null as any);
+    }
 }
 
 export class APIResponse_Model implements IAPIResponse_Model {
@@ -654,6 +710,106 @@ export interface IAllcode_model {
     cONTENT?: string | undefined;
 }
 
+export class Export_model implements IExport_model {
+    headers?: string[] | undefined;
+    columnId?: string[] | undefined;
+    reportName?: string | undefined;
+
+    constructor(data?: IExport_model) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["headers"])) {
+                this.headers = [] as any;
+                for (let item of _data["headers"])
+                    this.headers!.push(item);
+            }
+            if (Array.isArray(_data["columnId"])) {
+                this.columnId = [] as any;
+                for (let item of _data["columnId"])
+                    this.columnId!.push(item);
+            }
+            this.reportName = _data["reportName"];
+        }
+    }
+
+    static fromJS(data: any): Export_model {
+        data = typeof data === 'object' ? data : {};
+        let result = new Export_model();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.headers)) {
+            data["headers"] = [];
+            for (let item of this.headers)
+                data["headers"].push(item);
+        }
+        if (Array.isArray(this.columnId)) {
+            data["columnId"] = [];
+            for (let item of this.columnId)
+                data["columnId"].push(item);
+        }
+        data["reportName"] = this.reportName;
+        return data;
+    }
+}
+
+export interface IExport_model {
+    headers?: string[] | undefined;
+    columnId?: string[] | undefined;
+    reportName?: string | undefined;
+}
+
+export class MuseumExport_model implements IMuseumExport_model {
+    searchParams?: Museum_model;
+    exportParams?: Export_model;
+
+    constructor(data?: IMuseumExport_model) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.searchParams = _data["searchParams"] ? Museum_model.fromJS(_data["searchParams"]) : undefined as any;
+            this.exportParams = _data["exportParams"] ? Export_model.fromJS(_data["exportParams"]) : undefined as any;
+        }
+    }
+
+    static fromJS(data: any): MuseumExport_model {
+        data = typeof data === 'object' ? data : {};
+        let result = new MuseumExport_model();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["searchParams"] = this.searchParams ? this.searchParams.toJSON() : undefined as any;
+        data["exportParams"] = this.exportParams ? this.exportParams.toJSON() : undefined as any;
+        return data;
+    }
+}
+
+export interface IMuseumExport_model {
+    searchParams?: Museum_model;
+    exportParams?: Export_model;
+}
+
 export class Museum_model implements IMuseum_model {
     pageNumber?: number;
     pageSize?: number;
@@ -669,9 +825,11 @@ export class Museum_model implements IMuseum_model {
     pHONE?: string | undefined;
     uRL?: string | undefined;
     sTATUS?: string | undefined;
+    cONTENT?: string | undefined;
     cREATE_DT?: Date | undefined;
     cREATE_DT_FROMDATE?: Date | undefined;
     cREATE_DT_TODATE?: Date | undefined;
+    export?: boolean | undefined;
 
     constructor(data?: IMuseum_model) {
         if (data) {
@@ -698,9 +856,11 @@ export class Museum_model implements IMuseum_model {
             this.pHONE = _data["PHONE"];
             this.uRL = _data["URL"];
             this.sTATUS = _data["STATUS"];
+            this.cONTENT = _data["CONTENT"];
             this.cREATE_DT = _data["CREATE_DT"] ? new Date(_data["CREATE_DT"].toString()) : undefined as any;
             this.cREATE_DT_FROMDATE = _data["CREATE_DT_FROMDATE"] ? new Date(_data["CREATE_DT_FROMDATE"].toString()) : undefined as any;
             this.cREATE_DT_TODATE = _data["CREATE_DT_TODATE"] ? new Date(_data["CREATE_DT_TODATE"].toString()) : undefined as any;
+            this.export = _data["Export"];
         }
     }
 
@@ -727,9 +887,11 @@ export class Museum_model implements IMuseum_model {
         data["PHONE"] = this.pHONE;
         data["URL"] = this.uRL;
         data["STATUS"] = this.sTATUS;
+        data["CONTENT"] = this.cONTENT;
         data["CREATE_DT"] = this.cREATE_DT ? this.cREATE_DT.toISOString() : undefined as any;
         data["CREATE_DT_FROMDATE"] = this.cREATE_DT_FROMDATE ? this.cREATE_DT_FROMDATE.toISOString() : undefined as any;
         data["CREATE_DT_TODATE"] = this.cREATE_DT_TODATE ? this.cREATE_DT_TODATE.toISOString() : undefined as any;
+        data["Export"] = this.export;
         return data;
     }
 }
@@ -749,9 +911,11 @@ export interface IMuseum_model {
     pHONE?: string | undefined;
     uRL?: string | undefined;
     sTATUS?: string | undefined;
+    cONTENT?: string | undefined;
     cREATE_DT?: Date | undefined;
     cREATE_DT_FROMDATE?: Date | undefined;
     cREATE_DT_TODATE?: Date | undefined;
+    export?: boolean | undefined;
 }
 
 export class ApiException extends Error {

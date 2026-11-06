@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { useRouteError, isRouteErrorResponse, useNavigate } from "react-router-dom";
 
-function LoadingError() {
+function LoadingError({defaultMessage}) {
     const error = useRouteError();
     const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ function LoadingError() {
             </Typography>
 
             <Alert severity="error" sx={{ mb: 3, textAlign: "left" }}>
-                {message}
+                {defaultMessage == null ? message : defaultMessage}
             </Alert>
 
             <Button
